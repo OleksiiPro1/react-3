@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
+const hStyle = { color: 'red' };
 function App() {
+  useEffect(() => {
+    fetch('https://api.memegen.link/templates')
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 style={hStyle}>Meme generator</h1>
+      <label>
+        Top meme Text
+        <br />
+        <input type="text" />
+      </label>
+      <br />
+      <label>
+        Bottom meme Text
+        <br />
+        <input type="text" />
+      </label>
     </div>
   );
 }
