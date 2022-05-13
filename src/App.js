@@ -1,11 +1,12 @@
 import './App.css';
 import { useState } from 'react';
+import Training from './Training';
 
 const hStyle = { color: 'green' };
 export default function App() {
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [images, setImages] = useState('');
+  const [images, setImages] = useState('aag');
   const [url, setUrl] = useState(
     'https://api.memegen.link/images/aag/foo/bar.png',
   );
@@ -69,10 +70,20 @@ export default function App() {
         Generate
       </button>
       <br />
+      <label>
+        Choose template
+        <br />
+        <input
+          value={images}
+          onChange={(event) => setImages(event.currentTarget.value)}
+        />
+      </label>
       <br />
       <br />
+      <button></button>
       <br />
       <br />
+      <Training />
     </div>
   );
 }
