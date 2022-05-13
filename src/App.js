@@ -1,9 +1,36 @@
 import './App.css';
+//import fetch from 'fetch';
 import { useState } from 'react';
 import Training from './Training';
 
+const inputStyle = { color: 'blue' };
 const hStyle = { color: 'green' };
 export default function App() {
+  const download = (e) => {
+    console.log(e.target.href);
+    fetch(e.target.href, {
+      method: 'GET',
+      hesders: {},
+    })
+      .then((response) => {
+        response
+          .arrayBuffer()
+          .then(function (buffer) {
+            const url = window.URL.createObjectURL(new Blob([buffer]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'image.png');
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch(() => {
+            console.log('Import of web vitals failed');
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
   const [images, setImages] = useState('aag');
@@ -46,6 +73,7 @@ export default function App() {
         Top meme Text
         <br />
         <input
+          style={inputStyle}
           value={topText}
           onChange={(event) => setTopText(event.currentTarget.value)}
         />
@@ -56,10 +84,13 @@ export default function App() {
         Bottom meme Text
         <br />
         <input
+          style={inputStyle}
           value={bottomText}
           onChange={(event) => setBottomText(event.currentTarget.value)}
         />
       </label>
+      <br />
+      <br />
       <button
         onClick={() => {
           setUrl(
@@ -70,17 +101,21 @@ export default function App() {
         Generate
       </button>
       <br />
+      <br />
       <label>
         Choose template
         <br />
         <input
+          style={inputStyle}
           value={images}
           onChange={(event) => setImages(event.currentTarget.value)}
         />
       </label>
       <br />
       <br />
-      <button></button>
+      <a href={url} download onClick={(e) => download(e)}>
+        <button>Download</button>
+      </a>
       <br />
       <br />
       <Training />
